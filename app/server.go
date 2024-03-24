@@ -9,26 +9,30 @@ import (
 
 func main() {
 	port := flag.String("port", "6379", "port to listen on")
+	replicaof := flag.String("replicaof", "", "replicate to another redis server")
 
 	flag.Parse()
 
 	var l net.Listener
 	var err error
 
-	switch {
-	case *port != "6379":
+	s := NewStore()
+
+	if *port != "" {
 		l, err = net.Listen("tcp", "0.0.0.0:"+*port)
 		if err != nil {
 			fmt.Println("Failed to bind to port " + *port)
 			os.Exit(1)
 		}
-	default:
+	} else {
 		l, err = net.Listen("tcp", "0.0.0.0:6379")
 		if err != nil {
 			fmt.Println("Failed to bind to port 6379")
 			os.Exit(1)
 		}
 	}
+
+	s.UpdateInfo(*replicaof)
 
 	for {
 		c, err := l.Accept()
@@ -37,6 +41,6 @@ func main() {
 			os.Exit(1)
 		}
 
-		go handleConnection(c)
+		go handleConnection(c, s)
 	}
 }

@@ -6,9 +6,8 @@ import (
 	"os"
 )
 
-func handleConnection(c net.Conn) {
+func handleConnection(c net.Conn, s *Store) {
 	b := make([]byte, 1024)
-	s := NewStore()
 
 	for {
 		_, err := c.Read(b)
