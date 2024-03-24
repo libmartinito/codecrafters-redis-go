@@ -21,6 +21,10 @@ func generateGetResponse(k string, s *Store) string {
 	}
 }
 
+func generateInfoResponse() string {
+	return generateBulkString("role:master")
+}
+
 func generatePingResponse() string {
 	return generateSimpleString("PONG")
 }
@@ -34,6 +38,8 @@ func generateResponse(cmd string, args []string, s *Store) string {
 		return generateSetResponse(args, s)
 	} else if cmd == "get" {
 		return generateGetResponse(args[0], s)
+	} else if cmd == "info" {
+		return generateInfoResponse()
 	}
 
 	return ""
