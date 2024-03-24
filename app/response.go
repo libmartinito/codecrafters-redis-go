@@ -22,7 +22,11 @@ func generateGetResponse(k string, s *Store) string {
 }
 
 func generateInfoResponse(s *Store) string {
-	return generateBulkString("role:" + s.info["replication"]["role"])
+	role := "role:" + s.info.replication.role
+	masterReplid := "master_replid:" + s.info.replication.masterReplid
+	masterReplOffset := "master_repl_offset:" + strconv.Itoa(s.info.replication.masterReplOffset)
+
+	return generateBulkString(role + "\n" + masterReplid + "\n" + masterReplOffset)
 }
 
 func generatePingResponse() string {

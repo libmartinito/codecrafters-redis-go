@@ -32,7 +32,7 @@ func main() {
 		}
 	}
 
-	s.UpdateInfo(*replicaof)
+	s.InitInfo(*replicaof)
 
 	for {
 		c, err := l.Accept()
