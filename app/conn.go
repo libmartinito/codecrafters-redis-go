@@ -20,8 +20,8 @@ func handleConnection(c net.Conn) {
 			os.Exit(1)
 		}
 
-		cmd, _ := parseResp(b)
-		response := generateResponse(cmd, nil)
+		cmd, args := parseResp(b)
+		response := generateResponse(cmd, args)
 		c.Write([]byte(response))
 	}
 }
