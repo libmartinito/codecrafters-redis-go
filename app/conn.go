@@ -25,3 +25,13 @@ func handleConnection(c net.Conn, s *Store) {
 		c.Write([]byte(response))
 	}
 }
+
+func sendPingToMaster(host string, port string) {
+	c, err := net.Dial("tcp", host+":"+port)
+	if err != nil {
+		fmt.Println("Error connecting to master: ", err.Error())
+		os.Exit(1)
+	}
+
+	c.Write([]byte("*1\r\n$4\r\nping\r\n"))
+}

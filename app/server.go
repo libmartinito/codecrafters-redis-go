@@ -32,6 +32,12 @@ func main() {
 		}
 	}
 
+	if *replicaof != "" {
+		host := *replicaof
+		port := flag.Arg(0)
+		sendPingToMaster(host, port)
+	}
+
 	s.InitInfo(*replicaof)
 
 	for {
