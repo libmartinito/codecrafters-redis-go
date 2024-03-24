@@ -12,6 +12,10 @@ func handleConnection(c net.Conn) {
 	for {
 		_, err := c.Read(b)
 		if err != nil {
+			if err.Error() == "EOF" {
+				return
+			}
+
 			fmt.Println("Error reading from connection: ", err.Error())
 			os.Exit(1)
 		}
