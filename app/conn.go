@@ -26,7 +26,7 @@ func handleConnection(c net.Conn, s *Store) {
 	}
 }
 
-func sendPingToMaster(host string, port string) {
+func initiateMasterHandshake(host string, port string) {
 	c, err := net.Dial("tcp", host+":"+port)
 	if err != nil {
 		fmt.Println("Error connecting to master: ", err.Error())
@@ -34,4 +34,6 @@ func sendPingToMaster(host string, port string) {
 	}
 
 	c.Write([]byte("*1\r\n$4\r\nping\r\n"))
+	c.Write([]byte("*3\r\n$8\r\nREPLCONF\r\n$14\r\nlistening-port\r\n$4\r\n6380\r\n"))
+	c.Write([]byte("*3\r\n$8\r\nREPLCONF\r\n$4\r\ncapa\r\n$6\r\npsync2\r\n"))
 }

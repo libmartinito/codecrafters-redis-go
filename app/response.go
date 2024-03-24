@@ -44,6 +44,8 @@ func generateResponse(cmd string, args []string, s *Store) string {
 		return generateGetResponse(args[0], s)
 	} else if cmd == "info" {
 		return generateInfoResponse(s)
+	} else if cmd == "replconf" {
+		return generateSimpleString("OK")
 	}
 
 	return ""
