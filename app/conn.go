@@ -8,6 +8,7 @@ import (
 
 func handleConnection(c net.Conn) {
 	b := make([]byte, 1024)
+	s := NewStore()
 
 	for {
 		_, err := c.Read(b)
@@ -21,7 +22,7 @@ func handleConnection(c net.Conn) {
 		}
 
 		cmd, args := parseResp(b)
-		response := generateResponse(cmd, args)
+		response := generateResponse(cmd, args, s)
 		c.Write([]byte(response))
 	}
 }
