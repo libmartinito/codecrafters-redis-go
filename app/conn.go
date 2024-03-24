@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"net"
 	"os"
+	"strings"
 )
 
 func handleConnection(c net.Conn, s *Store) {
@@ -21,7 +22,7 @@ func handleConnection(c net.Conn, s *Store) {
 		}
 
 		cmd, args := parseResp(b)
-		response := generateResponse(cmd, args, s)
+		response := generateResponse(strings.ToLower(cmd), args, s)
 		c.Write([]byte(response))
 	}
 }
