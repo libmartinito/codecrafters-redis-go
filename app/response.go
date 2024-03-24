@@ -46,6 +46,8 @@ func generateResponse(cmd string, args []string, s *Store) string {
 		return generateInfoResponse(s)
 	} else if cmd == "replconf" {
 		return generateSimpleString("OK")
+	} else if cmd == "psync" {
+		return generateSimpleString("FULLRESYNC " + s.info.replication.masterReplid + " " + strconv.Itoa(s.info.replication.masterReplOffset))
 	}
 
 	return ""
